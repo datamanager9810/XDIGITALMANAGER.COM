@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advocate Intelligent Portal</title>
+    <title>Advocate Case Management System</title>
+    <!-- Tailwind CSS for modern premium dark UI -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .red-alert-row {
@@ -19,109 +21,72 @@
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
 
+    <!-- LOGIN SCREEN -->
     <div id="login-screen" class="flex items-center justify-center min-h-screen px-4">
-        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8 space-y-5">
+        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8 space-y-6">
             <div class="text-center">
-                <div class="mx-auto h-14 w-14 bg-amber-500 rounded-full flex items-center justify-center mb-3 shadow-lg">
-                    <i class="fa-solid fa-scale-balanced text-xl text-slate-950"></i>
+                <div class="mx-auto h-16 w-16 bg-amber-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                    <i class="fa-solid fa-shield-halved text-2xl text-slate-950"></i>
                 </div>
-                <h1 class="text-xl font-bold text-white tracking-wide">Advocate Safe Portal</h1>
-                <p class="text-slate-400 text-xs mt-0.5 uppercase text-amber-500 font-medium">Owner of this site: Himanshu Yadav</p>
+                <h1 class="text-2xl font-bold text-white tracking-wide">Advocate</h1>
+                <p class="text-slate-400 text-xs mt-1 font-semibold uppercase tracking-wider text-amber-500">Owner of this site: Himanshu Yadav</p>
             </div>
             
-            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+            <form id="login-form" onsubmit="handleStrictLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Username / Phone Number</label>
-                    <input id="login-username" type="text" required class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 text-white text-sm" placeholder="adv@himanshu9810 ya Mobile Number">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Username</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </span>
+                        <input id="login-username" type="text" required class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 text-white font-mono text-sm" placeholder="adv@himanshu9810">
+                    </div>
                 </div>
+                
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Password</label>
-                    <input id="login-password" type="password" required class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 text-white text-sm" placeholder="••••••••••••">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fa-solid fa-key"></i>
+                        </span>
+                        <input id="login-password" type="password" required class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 text-white font-mono text-sm" placeholder="••••••••••••">
+                    </div>
                 </div>
+
                 <div class="text-red-400 text-xs hidden text-center font-medium p-2 bg-red-500/10 rounded-lg border border-red-500/20" id="login-error">
-                    Access Denied: Galat Username ya Password!
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> Access Denied: Galat Username ya Password!
                 </div>
-                <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl transition-all cursor-pointer text-sm shadow-md">
-                    Unlock Dashboard <i class="fa-solid fa-lock-open ml-1"></i>
+
+                <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl shadow-lg transition-all cursor-pointer">
+                    Unlock Dashboard <i class="fa-solid fa-lock-open ml-2"></i>
                 </button>
             </form>
-            
-            <div class="text-center pt-2 border-t border-slate-700">
-                <p class="text-xs text-slate-400">Naye User hain? <button onclick="showScreen('register-screen')" class="text-amber-400 font-bold hover:underline cursor-pointer">Naya Registration Karein</button></p>
-            </div>
         </div>
     </div>
 
-    <div id="register-screen" class="hidden flex items-center justify-center min-h-screen px-4">
-        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8 space-y-4">
-            <h2 class="text-xl font-bold text-white text-center"><i class="fa-solid fa-user-plus text-amber-500"></i> Advocate Registration</h2>
-            <form onsubmit="handleRegister(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">Aapka Pura Naam (Advocate Name) *</label>
-                    <input id="reg-name" type="text" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. Ramesh Kumar">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">WhatsApp Number *</label>
-                    <input id="reg-phone" type="tel" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. 919876543210">
-                </div>
-                <div>
-                    <label class="block text-xs text-slate-400 mb-1">Password Set Karein *</label>
-                    <input id="reg-pass" type="password" required class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="••••••••">
-                </div>
-                <button type="submit" class="w-full py-2.5 bg-amber-500 text-slate-950 font-bold rounded-lg text-sm mt-2 cursor-pointer shadow">Send OTP Verification</button>
-            </form>
-            <div class="text-center pt-2"><button onclick="showScreen('login-screen')" class="text-xs text-slate-400 hover:text-white underline cursor-pointer">Pehle se account hai? Login karein</button></div>
-        </div>
-    </div>
-
-    <div id="otp-screen" class="hidden flex items-center justify-center min-h-screen px-4">
-        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8 text-center space-y-4">
-            <i class="fa-solid fa-comment-sms text-3xl text-amber-500"></i>
-            <h2 class="text-lg font-bold text-white">WhatsApp OTP Verification</h2>
-            <p class="text-xs text-slate-400">Aapke registered number par security OTP bheja gaya hai. Demo OTP string: <span class="text-emerald-400 font-mono font-bold">1234</span></p>
-            <input id="otp-input" type="text" maxlength="4" class="w-32 text-center text-xl tracking-widest py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-amber-500" placeholder="0000">
-            <button onclick="verifyOTP()" class="w-full py-2.5 bg-emerald-500 text-slate-950 font-bold rounded-lg text-sm cursor-pointer shadow">Verify & Activate Account</button>
-        </div>
-    </div>
-
-    <div id="payment-screen" class="hidden flex items-center justify-center min-h-screen px-4">
-        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-6 text-center space-y-4">
-            <div class="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-red-400 text-xs font-semibold">
-                <i class="fa-solid fa-triangle-exclamation animate-pulse"></i> 30-Days Service Cycle Validation Required!
-            </div>
-            <h2 class="text-base font-bold text-white uppercase tracking-wide">Scan & Pay Activation Fees</h2>
-            <p class="text-xs text-slate-400">System access agle 30 dinon ke liye badhane hetu ₹499 ka payment poora karein. Aapka purana data poori tarah surakshit locked hai.</p>
-            
-            <div class="mx-auto w-60 bg-white p-3 rounded-xl shadow-lg border-2 border-slate-600">
-                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAIBAQEBAQIBAQECAgICAgQDAgICAgUEBAMEBgUGBgYFBgYGBwkIBgcJBwYGCAsICQoKCgoKBggLDAsKDAkKCgr/2wBDAQICAgICAgUDAwUKBwYHCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgr/wAARCAKDAoMDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usfEX546Gg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre45rBxjwk5SVlpeYmZqio6Slpqeoqaqys7S1tre5/9oADAMBAAIRAxEAPwD9/KKKKACiiigAooooA+W/+CvPx0+LX7N//BP/AOIXxo+BvjP/AIR7xVo/9k/2Zq39n2t35PnaraQS/urqOWJ90UsifMhxuyMEA1+W/wCxJ/wcl/tRfDDxrYeGP2ztPtfHvhC6uUivNYsNNt7HVrBGYAzKIFjguguctE6IzY4kBG0/oR/wcX/8odPjB/3AP/T3p9fzC17uW4alWw8uddX+SPMxlapTqpR7H9n/AMFfjR8Lf2iPhho/xm+C3jW08QeGtdtftOm6nZk7ZEyVZWVgHjkVgVeNwrowKsAQRXV1+CP/AAahfteePvDXx58VfsU+IvEE934S17w9ceI9BsZ3Lrp+o20kK3Cw5+5HNBKzuo43WwYDLMT+91ebi6Dw9Zwf/DHXQqKtTUkFFFFcxqfnT/wcofHX4tfs4/8ABOdfiX8FfGf/AAj2u/8ACd6Va/2l/Z1rd/uZFnLp5d1HInO1ecZ44Ir8EPgd/wAFf/8Agoz8CfixZfFnTf2sfGviJra5SS+0Pxbq02p2GoxA/PBNFcMwQMucPHsdScqymv24/wCDu7/lEp/3UrRv/RdzX82te/ltKlPDe8u/5I8vG1JxrWTP68P+CdH7bngT/goX+yV4W/aY8EWwsX1SN7PXdHM3mNpWqQEJc2rNj5lDbXRuC0UkbEDdge4V/MZ/wbeftt+MP2YP2+/Dvwa1TXpv+EI+K19H4f1fTZHPlQ6lKCNNukXosvnEQE8ZjuDk/KuP6c683GYf6vWceh14eqatK8gooorlNxGZUUu7AAckk9K/m8/4KEf8AByp+3D8Zvi9rPhv9kz4gf8K18A6fqEsOh/2Rp1vNqWpQI5VLm5uJ0kMbyAB/Ji2LHnaTIQXb+h742Xd3YfBnxdXWD/oVxeP9OaSVV/1kwtpCifP8vLADP3Rn5t1fxqV62VUKdXnnNXtaxw46rUp2jE+xvgr/AMF6v+CqnwW8c2fjCL9rbxV4pghuklu9D8cTpq1pfRhsvC/nKZIQw43QPFIvVWBFf0nfsBftveAv+Cgf7KPhr9pnwPaGw/tVJLbWNGkmEkmk6lAdv2u1Zv4kbKyI2PmiliYgbsV/HjX7df8ABolfXdr+yH8XZrZtptr+N/p/ohP9Lg3v/wB+b6e3v+iR9sFh6VGgqkVrf9DLA1pzqcj2P3aooorwz0wooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigA%20%20AAAAB3RJTUUHMAYDFgglU%20815AAAADGFUWHRDcmVhdGlvbiBUaW1lAHAuIDIwMDYuMDMuMjMgMTY6MjQ6MzdV%20iWwAAAAJcEhZcwAACxMAAAsTAQCanBgAAAm3SURBVHic7ZzbcdtIEkVPt2R1Wl02B3c5sCsDOzGwygH7uFsnl%20zY1eN1Z2e1aZ0MZEkCYPAGaABdIev5J6v9BIAiBghgQ4vH558sXAMh0lF9P8eW0A%20d2Vf0%20xK0x5XjH1dF/X5dM5u1P3jQoA%201jW0R9DHMK/o%20f2%207zNffuK/c%20T%20L5c9q7a/K3T7Ovs%20hD8%20v%207%209zV25p29X9R0n/f0n/f2ufr6lH1fP1/Sfv2tPuc/zffP8Z%207/qF/v%20Q%20d/Z9/7M%20f2vW3dM5pT/r9Xv37S/P%20sX/vX97nvs%2072X9/S//Xtdf/r2v/aO%20f/ffxT3uuf/vWz3vX7df2sf17X79v991jmvV/1eUrfh/T9l/3j6zHvvef%20Wc%2099mHvc5/%20c5722f6%20Wc/H1/e593X%20sT/%209fPvPec/e857/2q%20/%207t/ef%20%20X/2nPe67/2rf%207f9fv/f1afr2vvbV27c%207Wvs7Z/77n/l/W/r/fO%20e8972rfdr/rtrX%20e0e0%20f22f9n%20vve%20e89rzHvfbX3sPqXf3rXP3W2vP8fd7v%20v3O%20b97X/f597qrf93W%20fv/a%20ev1/9r9q1%20ft0/7bN/ftc/r2vf%20c%2031efq5%20vrW3qf97bO2f2qM%20%2017Wud%201j3O%20t9W/ezbfa//Xj9fe13nvPeb573t2v95Wufse%20/q/epd3e/bfa17vnvPfc/fX%20vV2Ppe9XvtPf/ZfvZtr/uzbv9t3/fWvs7WvvbP/fe2zvvve/vbe0/p75x9P3tO%209772vvb9%20fO31/XbV3W/vGzXvs673H2fe577Ztz3/vW3mvfd0//fa5/ntv7p9e/Pvd1f%20%20sM/tZf73Xv9W77u39e2%20/d197D6vv/et/f09frvXz/p3Xv%20ef69p137X7/qxf99rfqvv/s85e%20fO3/etdvedf321d%20zrv2mvtPce0znvsff/c5z%20n9z52Xfv/Wvde%202f//P/afVv719f9fXztX/v/W/f5e33vntb3ev6%20vte9ruvnGNe/p/1vfb/%203Wv/bPfWvfZ/rn6/bve0%20v3/uU9f3%20vv1fPv1d/6fe22vvP%20/f/Rvvf%20P/ae%209/7rP/f%207fX/3%2031%20/btfed7/d1%20f/a%207T3M/a1/X597H32rf597Xufd/7r%20t/Wvtd/v%20vvtPcxdrHOs/Z3Xvs1ruv7Pvs2z9mzvff1vff3e9rmX/fe5rvf5z%20nPev9p7Xue9/bv3t1rfW/P3tX%20ev1d%20frHvs45pnvP%20V/Vud9%20fOzvbe1%20/9xrf9X1cftc/n%20vvdc%202z%20vntPce0znveY//P/fZf%20/tb/2rde1jfX%20t721dz3vve/tff6tX%2031ff/bfX/7efr7u1nveY//Zvvfa1/W9P%20veP3vvfZlzXPvs%20e81f%20e0%20pne%20/rfPfufW/dYf73O319/W/vXz%20nXfc%20%20e09zn/PezznPMf%201jvfZ/rmnP6fv/eefc5/m7/vvfZ271tfe0xrPec%209z3v6XNe/56f%20Ofe5jzmHPfa9/vvefZvznO3eM%20exrufnPvfZ/rmntc5pnO3ec/a/f%20d9/vveexrnNf9pne7f3/fW9rf/1rfV33vvbc%20/7r2ue/99n7Z9%20//7p/Pvbf%200%20rW%20s777/Wfv%20/rnGMe0zp3rf2sMef2z9rne1rnPOvznv7nP/vWvs57Pvfa%20f9zrnvdtrX2aZzz2nMecwzr9b/7Z52znrvWvtcY81jnsed%20zrnueW/vntOef%209rvfZ//ftr7Tud/%20zX%20vveex%20fO/vXue/%2017qve5%20z3nvt%20d/Z9/7Z%207X3X9b9XvvGnvfZ/ufPv/e/f%20r3P%20f3Pvba57/bPf/rf/axp7POvvffOfe1ru3ffc5/t/v3Pv%20X/ffMec%20rZveufU3z3Pv6d7vnuef1vPtdc/fP/bve0zp3rf/31/bNfvOexznnsfazPec/Z%20rZp3bWe%20ef/a85%209/e52znn7Peac9pnXOfe17nPva%20/19znPM45rntPff/e2zn/rf%20rPe0z/e%20f9c45jv71W%20vvftbe5r2vs4/XOec4rnHse%20/XOe57b3P/a51rnntZc1zjvO%20//rZ/7nvc4xjmOec55//31f%20%20f/22tdtrXucf%20zrvueex%20e8xr2nMf%20a%20zXO%20e4xrvue/7zn//vXvda9znHvc%20%20zXOdtrXPOf7d77XOs%20f%209//rXPf/97jHnMca57Xueed1zzPOZ5jXOe4%20zjvM5/z3Mec57/PuxzjPuexrnPva%205rHPcx39rXPvc8xrHnMee57r2uc55jzWfe%207Xvc533XOe/7zHOeaxzjXPf/7nXOda9rnPua/7rHnMee/z7XPf/%20%20rnHOea5xnHNf/Puce8xjzWPM5/t//rnHP%207XHOe/z7Mca57jv//rZ//3ucecxjznOd9zjmPM5x3nPc8xjzPce/znc4/r3ue%20/nXPcYxzrv%20axznHPcx1r2PMe99nHuc/%20x/znOcc/zjvuc%20xrzPMdxzHOO65/mHPec5xjnudexzrXOOcxznPMd%20zrvc5znPuc8/v//YxzjXMd//rZ/73uc5zrvdY8znf//7nPexznHPf593PMd%207rnPMc//udex3PucxznudaxznOcc5//W/u5%20xjzHOcYxzXPec5zjHce/jnf//7HOOc5zjv%20aznHsc5znWuc//9zrmPMdxzHPedzzHPcxz//Wzrnf/%20//7HOcY5//PexzjHOdax3HPudxrHOce5z//XP/97nPuexrnudfxznPexxrmP/rZn/Oe%201j//fVzznPec//zrnvc4xznOd//u5//Wc4x//POx7nXP/93nPueed///exzHsc573XP%20455jzWe8//ucc5//udf//Wc53PucxznvdZ9rnPexzrncc/zzue45jv/c6/rnfex7nPec97rnPex3HOd//vY5xjXPf/zrneY//XP//93nPucx//PexzjvMecx73XPc5zHvMdx//POZ/zXMd/znWdax7HOecxznudf//Wzrnn/fVzrnP//d933Wfd73XP887HXO///Wc5zvOuc//X/u///ucc9///uc4xznHP/933WfY/zrvdax7HOOcxzHPf//3PMYx//Pux7HXO%207XPMedzzudc///WcY5zrHf/7nXe///udb//Wvc//7jH//93PMdx3nP///v/9bH/887P/933XfY8znud///XOcc9///XPec/znfc///XPf997HP//d93vdY/zvudcxzHOec//X/9bH8e93XP//e5//Wc//93X//Vxz//fW///e///WOcf73sfnvsfnvtfnvsfjvO///Xv///e////XP///3v////X/P///d////8////P////X////v////z////9////P////v///9////f////3f///3////3v///d////P////z////d////7v///P////f////f////z////z////d////9////v///9////9////9////P////X////9////P////9////3////f////z////9////O////9////O////3////O////O////3////3////v////3////3////9////3////3////O////3////v///9////P////O////9////3////9////9////3////3////f////O////9////3////3////3////3////O////v////3////3////f////3////9////f////f////9////O////3////9////3////9////3////3////3////f////3////9////3////f////3////3////f////3////3////3////f////3////3////3////3////3////3////f////3////3////3////3////3////f////3////3////3////3////yF%20%20S3wAAAAAElFTkSuQmCC" class="w-48 h-48 mx-auto" alt="Himanshu Yadav QR Code">
-            </div>
-            
-            <div class="text-xl font-mono font-bold text-amber-400">Fixed Fees: ₹499/-</div>
-            <button onclick="simulatePaymentSuccess()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl text-sm cursor-pointer shadow">
-                <i class="fa-solid fa-circle-check"></i> I Have Paid (Unlock Panel)
-            </button>
-        </div>
-    </div>
-
+    <!-- MAIN DASHBOARD SCREEN -->
     <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
+        <!-- Top Nav Header -->
         <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
                 <div class="h-10 w-10 bg-amber-500 rounded-lg flex items-center justify-center">
                     <i class="fa-solid fa-scale-balanced text-lg text-slate-950"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-white leading-tight">Advocate <span id="user-display-name"></span></h2>
+                    <h2 class="text-lg font-bold text-white leading-tight">Advocate</h2>
+                    <!-- Kitni der pehle login hua tracker label -->
                     <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5" id="last-login-timer">
-                        <i class="fa-solid fa-clock text-slate-500"></i> Session tracker active
+                        <i class="fa-solid fa-clock text-slate-500"></i> Loading session tracker...
                     </p>
                 </div>
             </div>
             
             <div class="flex items-center gap-3 w-full md:w-auto justify-end flex-wrap">
-                <button onclick="exportBackup()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs flex items-center gap-1 cursor-pointer">
+                <!-- Backup Tools -->
+                <button onclick="exportBackup()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs flex items-center gap-1 cursor-pointer" title="Data Secure Backup Lein">
                     <i class="fa-solid fa-download"></i> Backup
                 </button>
-                <button onclick="triggerImport()" class="px-2.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs flex items-center gap-1 cursor-pointer">
+                <button onclick="triggerImport()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs flex items-center gap-1 cursor-pointer" title="Purana Data Restore Karein">
                     <i class="fa-solid fa-upload"></i> Restore
                 </button>
                 <input type="file" id="import-file" class="hidden" onchange="importBackup(event)" accept=".json">
@@ -135,24 +100,26 @@
             </div>
         </header>
 
+        <!-- Main Body Grid -->
         <main class="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
             
+            <!-- Statistics Widget -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center shadow-md">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
                     <div>
                         <p class="text-xs text-slate-400 font-semibold uppercase">Total Database</p>
                         <h3 class="text-2xl font-bold text-white mt-1" id="count-total">0</h3>
                     </div>
                     <i class="fa-solid fa-folder-closed text-2xl text-blue-400 bg-blue-500/10 p-3 rounded-lg"></i>
                 </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center shadow-md">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
                     <div>
                         <p class="text-xs text-amber-400 font-semibold uppercase">🚨 Today's Hearings</p>
                         <h3 class="text-2xl font-bold text-amber-400 mt-1" id="count-today">0</h3>
                     </div>
                     <i class="fa-solid fa-gavel text-2xl text-amber-400 bg-amber-500/10 p-3 rounded-lg"></i>
                 </div>
-                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center shadow-md">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
                     <div>
                         <p class="text-xs text-red-400 font-semibold uppercase">⚠️ 1-Day Red Alerts</p>
                         <h3 class="text-2xl font-bold text-red-400 mt-1" id="count-alerts">0</h3>
@@ -161,10 +128,13 @@
                 </div>
             </div>
 
+            <!-- Search & Controls Filter -->
             <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex flex-col sm:flex-row justify-between gap-4">
                 <div class="relative flex-1">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fa-solid fa-magnifying-glass text-sm"></i></span>
-                    <input id="search-bar" oninput="renderClients()" type="text" class="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500" placeholder="Naam ya case number se dhoondein...">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input id="search-bar" oninput="renderClients()" type="text" class="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500" placeholder="Naam ya case number se turant dhoondein...">
                 </div>
                 <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 px-3 py-2 rounded-lg text-xs">
                     <span class="text-slate-400"><i class="fa-solid fa-calendar-days"></i> System Date:</span>
@@ -172,6 +142,7 @@
                 </div>
             </div>
 
+            <!-- Main Client Table -->
             <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -182,48 +153,58 @@
                                 <th class="py-3.5 px-5">WhatsApp</th>
                                 <th class="py-3.5 px-5">Case Info & Court</th>
                                 <th class="py-3.5 px-5">Current Hearing</th>
-                                <th class="py-3.5 px-5 text-center">Actions (1-Click)</th>
+                                <th class="py-3.5 px-5 text-center">Actions</th>
                                 <th class="py-3.5 px-5 text-center">Remove</th>
                             </tr>
                         </thead>
                         <tbody id="client-table-body" class="divide-y divide-slate-700/50 text-sm">
-                            </tbody>
+                            <!-- JS Inject Rows -->
+                        </tbody>
                     </table>
+                    <!-- Empty State Warning -->
                     <div id="empty-state" class="p-10 text-center text-slate-500 hidden">
                         <i class="fa-solid fa-folder-open text-4xl mb-3 block text-slate-600"></i>
-                        Koi client data nahi mila. Naye client ki details dalkar safe karein.
+                        Koi client data nahi mila. Naya client add karne ke liye upar wale button par click karein.
                     </div>
                 </div>
             </div>
         </main>
         
-        <footer class="bg-slate-800 border-t border-slate-700 py-3 text-center text-xs text-slate-500 font-semibold uppercase tracking-wide">
-            Owner of this site: <span class="text-amber-500">Himanshu Yadav</span>
+        <!-- Footer with requested owner text -->
+        <footer class="bg-slate-800 border-t border-slate-700 py-3 text-center text-xs text-slate-500">
+            Owner of this site: <span class="text-slate-300 font-semibold">Himanshu Yadav</span>
         </footer>
     </div>
 
+    <!-- MODAL: ADD CLIENT & CAMERA CAPTURE -->
     <div id="add-client-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="p-5 border-b border-slate-700 flex justify-between items-center bg-slate-900/50">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-user-shield text-amber-500"></i> Add Client Details to Safe Locker</h3>
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-amber-500"></i> Advanced Client Record System
+                </h3>
                 <button onclick="closeAddClientModal()" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             
             <form id="add-client-form" onsubmit="saveClientWithPhoto(event)" class="p-6 space-y-4">
+                
+                <!-- Camera UI Section -->
                 <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 flex flex-col items-center justify-center gap-3">
-                    <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Live Capture Camera Client Profile</div>
+                    <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Live Photo Capture Locker</div>
                     <video id="webcam" autoplay playsinline class="w-48 h-36 bg-black rounded-lg border border-slate-700 hidden object-cover"></video>
                     <canvas id="canvas" class="hidden"></canvas>
                     <img id="photo-preview" src="https://placehold.co/150x150/1e293b/a1a1aa?text=No+Photo" class="w-24 h-24 rounded-full object-cover border-2 border-slate-600 shadow-md">
+                    
                     <div class="flex gap-2">
                         <button type="button" onclick="startCamera()" class="px-3 py-1.5 bg-slate-700 text-xs text-slate-200 rounded-lg hover:bg-slate-600"><i class="fa-solid fa-camera mr-1"></i> Open Camera</button>
                         <button type="button" onclick="capturePhoto()" id="capture-btn" class="px-3 py-1.5 bg-blue-600 text-xs text-white rounded-lg hover:bg-blue-500 hidden"><i class="fa-solid fa-circle text-red-500 mr-1 animate-pulse"></i> Capture</button>
                     </div>
                 </div>
 
+                <!-- Form Fields -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Client Name *</label>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Client Ka Naam *</label>
                         <input type="text" id="c-name" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
                     </div>
                     <div>
@@ -238,13 +219,13 @@
                         <input type="text" id="c-case" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. Criminal Case 412/2026">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Court Name *</label>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Court Ka Vivran *</label>
                         <input type="text" id="c-court" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. District Court, Kanpur">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Hearing Date *</label>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Hearing / Tarik Ki Date *</label>
                     <input type="date" id="c-date" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
                 </div>
 
@@ -256,166 +237,94 @@
         </div>
     </div>
 
+    <!-- MODAL: NEXT DATE UPDATE ENGINE -->
     <div id="next-date-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm shadow-2xl p-6 space-y-4">
-            <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calendar-plus text-amber-500"></i> Set Court Agli Tarik</h3>
+            <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calendar-plus text-amber-500"></i> Court Agli Tarik Update</h3>
             <input type="hidden" id="update-client-id">
             <div>
-                <label class="block text-xs text-slate-400 mb-1">Nayi Hearing Date Select Karein</label>
+                <label class="block text-xs text-slate-400 mb-1">Nayi Hearing Date Chunein</label>
                 <input type="date" id="new-hearing-date" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-amber-500">
             </div>
             <div class="flex justify-end gap-2 pt-2">
                 <button onclick="closeNextDateModal()" class="px-3 py-2 bg-slate-700 text-slate-300 text-xs rounded-lg">Cancel</button>
-                <button onclick="saveNextHearingDate()" class="px-4 py-2 bg-emerald-500 text-slate-950 font-bold text-xs rounded-lg shadow">Set Date & Alert</button>
+                <button onclick="saveNextHearingDate()" class="px-4 py-2 bg-emerald-500 text-slate-950 font-bold text-xs rounded-lg shadow">Set Agli Tarik & Alert</button>
             </div>
         </div>
     </div>
 
+    <!-- BUSINESS INTELLIGENCE SCRIPT -->
     <script>
         const realTodayStr = new Date().toISOString().split('T')[0];
         let streamTrack = null;
         let capturedBase64 = "";
 
-        // Core Session States variables
-        let currentUser = JSON.parse(sessionStorage.getItem('active_user_session')) || null;
-        let globalUsersDB = JSON.parse(localStorage.getItem('registered_advocates_db')) || [];
+        // Dummy data poori tarah hata kar empty array set kar diya taaki blank start ho[span_4](start_span)[span_4](end_span)
+        let clients = JSON.parse(localStorage.getItem('adv_v3_clients')) || [];
 
         window.onload = function() {
             document.getElementById('system-date').value = realTodayStr;
-            evaluateSessionRoute();
+            if (sessionStorage.getItem('strict_logged_in') === 'true') {
+                showDashboard();
+            } else {
+                showLogin();
+            }
         };
 
-        function showScreen(screenId) {
-            const screens = ['login-screen', 'register-screen', 'otp-screen', 'payment-screen', 'dashboard-screen'];
-            screens.forEach(s => {
-                document.getElementById(s).classList.add('hidden');
-            });
-            document.getElementById(screenId).classList.remove('hidden');
-        }
-
-        // Registration Pipeline Control
-        let temporaryUserObj = null;
-        function handleRegister(e) {
-            e.preventDefault();
-            temporaryUserObj = {
-                name: document.getElementById('reg-name').value.trim(),
-                phone: document.getElementById('reg-phone').value.trim(),
-                pass: document.getElementById('reg-pass').value.trim(),
-                regDate: Date.now(),
-                paymentExpiry: Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 Days Trial Cycle
-            };
-            showScreen('otp-screen');
-        }
-
-        function verifyOTP() {
-            const val = document.getElementById('otp-input').value;
-            if(val === '1234') {
-                globalUsersDB.push(temporaryUserObj);
-                localStorage.setItem('registered_advocates_db', JSON.stringify(globalUsersDB));
-                alert("Account Successfully Active Ho Gaya! Login Karein.");
-                showScreen('login-screen');
-            } else {
-                alert("Galat Verification OTP Code!");
-            }
-        }
-
-        // Strict Routing Login Validation Check
-        function handleLogin(e) {
+        function handleStrictLogin(e) {
             e.preventDefault();
             const u = document.getElementById('login-username').value.trim();
             const p = document.getElementById('login-password').value.trim();
 
-            // 1. Admin Strict Route Bypass Checked
             if (u === 'adv@himanshu9810' && p === 'adv@himanshu14791') {
-                currentUser = { name: "Himanshu Yadav", role: "admin", phone: "9810" };
-                sessionStorage.setItem('active_user_session', JSON.stringify(currentUser));
+                sessionStorage.setItem('strict_logged_in', 'true');
                 localStorage.setItem('last_login_epoch', Date.now().toString());
-                evaluateSessionRoute();
-                return;
-            }
-
-            // 2. Public Paid Database Route Check
-            const foundUser = globalUsersDB.find(user => user.phone === u && user.pass === p);
-            if(foundUser) {
-                currentUser = { name: foundUser.name, role: "user", phone: foundUser.phone };
-                sessionStorage.setItem('active_user_session', JSON.stringify(currentUser));
-                localStorage.setItem('last_login_epoch', Date.now().toString());
-                evaluateSessionRoute();
+                document.getElementById('login-error').classList.add('hidden');
+                showDashboard();
             } else {
                 document.getElementById('login-error').classList.remove('hidden');
             }
         }
 
-        function evaluateSessionRoute() {
-            if(!currentUser) {
-                showScreen('login-screen');
-                return;
-            }
-
-            // If Admin Bypass, Free Unlimited Route directly
-            if(currentUser.role === 'admin') {
-                document.getElementById('user-display-name').innerText = ""; // Head title alignment
-                showScreen('dashboard-screen');
-                calculateTimeLapse();
-                renderClients();
-                return;
-            }
-
-            // Public Paid Member cycle verification check
-            const userProfile = globalUsersDB.find(u => u.phone === currentUser.phone);
-            if(userProfile && Date.now() > userProfile.paymentExpiry) {
-                showScreen('payment-screen');
-            } else {
-                document.getElementById('user-display-name').innerText = currentUser.name;
-                showScreen('dashboard-screen');
-                calculateTimeLapse();
-                renderClients();
-            }
+        function showLogin() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('dashboard-screen').classList.add('hidden');
         }
 
-        function simulatePaymentSuccess() {
-            // Update user cycle expiry parameters securely inside localized storage instances
-            const idx = globalUsersDB.findIndex(u => u.phone === currentUser.phone);
-            if(idx !== -1) {
-                globalUsersDB[idx].paymentExpiry = Date.now() + (30 * 24 * 60 * 60 * 1000); // Reset Cycle Clock
-                localStorage.setItem('registered_advocates_db', JSON.stringify(globalUsersDB));
-                alert("Payment Confirmed! Agle 30 Dinon Ke Liye Panel Unlock Kar Diya Gaya Hai.");
-                evaluateSessionRoute();
-            }
+        function showDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+            calculateTimeLapse();
+            renderClients();
         }
 
         function handleLogout() {
-            sessionStorage.removeItem('active_user_session');
-            currentUser = null;
-            showScreen('login-screen');
+            sessionStorage.removeItem('strict_logged_in');
+            showLogin();
         }
 
         function calculateTimeLapse() {
             const lastEpoch = localStorage.getItem('last_login_epoch');
             const timerLabel = document.getElementById('last-login-timer');
-            if(!lastEpoch) return;
-            const diffMins = Math.floor((Date.now() - parseInt(lastEpoch)) / 60000);
-            if(diffMins < 1) {
+            
+            if(!lastEpoch) {
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Abhi Abhi login kiya gaya`;
+                return;
+            }
+
+            const diffMs = Date.now() - parseInt(lastEpoch);
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 600000);
+
+            if (diffMins < 1) {
                 timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne abhi 1 minute se kam samay pehle login kiya tha`;
+            } else if (diffHours < 1) {
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne isse pehle ${diffMins} minute pehle login kiya tha`;
             } else {
-                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne pichli baar ${diffMins} minute pehle login kiya tha`;
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne isse pehle ${diffHours} ghante pehle login kiya tha`;
             }
         }
 
-        // Local dynamic workspace storage configuration isolated per registered account keys
-        function getStorageKey() {
-            return currentUser ? `adv_clients_data_${currentUser.phone}` : 'adv_final_clients';
-        }
-
-        function getClientsFromStorage() {
-            return JSON.parse(localStorage.getItem(getStorageKey())) || [];
-        }
-
-        function saveClientsToStorage(arr) {
-            localStorage.setItem(getStorageKey(), JSON.stringify(arr));
-        }
-
-        // Table Render Engine
         function renderClients() {
             const tableBody = document.getElementById('client-table-body');
             const emptyState = document.getElementById('empty-state');
@@ -423,55 +332,79 @@
             const searchKeyword = document.getElementById('search-bar').value.toLowerCase();
             
             tableBody.innerHTML = '';
-            const localClients = getClientsFromStorage();
             
-            let totalCounter = 0, todayCounter = 0, redAlertCounter = 0;
+            let totalCounter = 0;
+            let todayCounter = 0;
+            let redAlertCounter = 0;
 
-            if(localClients.length === 0) {
+            // Empty checker fallback
+            if(clients.length === 0) {
                 emptyState.classList.remove('hidden');
                 document.getElementById('count-total').innerText = 0;
                 document.getElementById('count-today').innerText = 0;
                 document.getElementById('count-alerts').innerText = 0;
                 return;
-            } else { emptyState.classList.add('hidden'); }
+            } else {
+                emptyState.classList.add('hidden');
+            }
 
-            localClients.forEach(client => {
-                if(searchKeyword && !client.name.toLowerCase().includes(searchKeyword) && !client.caseInfo.toLowerCase().includes(searchKeyword)) return;
+            clients.forEach(client => {
+                if(searchKeyword && !client.name.toLowerCase().includes(searchKeyword) && !client.caseInfo.toLowerCase().includes(searchKeyword)) {
+                    return; 
+                }
 
                 totalCounter++;
-                const dayDiff = Math.ceil((new Date(client.date).getTime() - new Date(currentSysDateStr).getTime()) / (1000 * 3600 * 24));
 
-                let customRowStyle = "", statusBadge = `<span class="text-slate-300 font-medium">${formatDateString(client.date)}</span>`;
+                const clientDateObj = new Date(client.date);
+                const sysDateObj = new Date(currentSysDateStr);
+                
+                const timeDiff = clientDateObj.getTime() - sysDateObj.getTime();
+                const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                let customRowStyle = "";
+                let statusBadge = `<span class="text-slate-300 font-medium">${formatDateString(client.date)}</span>`;
 
                 if (dayDiff === 0) {
-                    todayCounter++; customRowStyle = "today-row";
-                    statusBadge = `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 font-bold text-xs rounded border border-amber-500/30 w-max flex items-center gap-1"><i class="fa-solid fa-clock animate-pulse"></i> Aaj Hearing Hai</span>`;
+                    todayCounter++;
+                    customRowStyle = "today-row";
+                    statusBadge = `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 font-bold text-xs rounded border border-amber-500/30 flex items-center gap-1 w-max"><i class="fa-solid fa-clock animate-pulse"></i> Aaj Hearing Hai</span>`;
                 } else if (dayDiff === 1) {
-                    redAlertCounter++; customRowStyle = "red-alert-row"; // 1 Din pehle row red highlight warning zone
-                    statusBadge = `<span class="px-2 py-0.5 bg-red-500/20 text-red-400 font-bold text-xs rounded border border-red-500/30 w-max flex items-center gap-1 animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i> Kal Hearing Hai</span>`;
+                    redAlertCounter++;
+                    customRowStyle = "red-alert-row";
+                    statusBadge = `<span class="px-2 py-0.5 bg-red-500/20 text-red-400 font-bold text-xs rounded border border-red-500/30 flex items-center gap-1 w-max animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i> Kal Hearing Hai</span>`;
                 }
 
                 const avatar = client.img ? client.img : `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(client.name)}`;
 
                 const tr = document.createElement('tr');
                 tr.className = customRowStyle + " hover:bg-slate-700/20 transition-all";
+                
                 tr.innerHTML = `
                     <td class="py-3.5 px-5"><img src="${avatar}" class="w-9 h-9 rounded-full object-cover border border-slate-600"></td>
                     <td class="py-3.5 px-5 font-bold text-white">${client.name}</td>
-                    <td class="py-3.5 px-5 font-mono text-emerald-400">+${client.whatsapp}</td>
+                    <td class="py-3.5 px-5 font-mono text-emerald-400">
+                        <a href="https://wa.me/${client.whatsapp}" target="_blank" class="flex items-center gap-1"><i class="fa-brands fa-whatsapp text-base"></i> +${client.whatsapp}</a>
+                    </td>
                     <td class="py-3.5 px-5">
                         <div class="text-white font-medium">${client.caseInfo}</div>
-                        <div class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-gavel"></i> ${client.courtName}</div>
+                        <div class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-gavel text-slate-500"></i> ${client.courtName}</div>
                     </td>
                     <td class="py-3.5 px-5">${statusBadge}</td>
                     <td class="py-3.5 px-5">
                         <div class="flex items-center justify-center gap-2">
-                            <button onclick="triggerMessageEngine('${client.id}', 'today')" class="px-2 py-1.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-md shadow cursor-pointer"><i class="fa-solid fa-paper-plane"></i> Today Alert</button>
-                            <button onclick="openNextDateModal('${client.id}')" class="px-2 py-1.5 bg-emerald-500 text-slate-950 font-bold text-xs rounded-md shadow cursor-pointer"><i class="fa-solid fa-calendar-check"></i> Agli Tarik</button>
+                            <button onclick="triggerMessageEngine(${client.id}, 'today')" class="px-2 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-md shadow flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-paper-plane"></i> Today Alert
+                            </button>
+                            <button onclick="openNextDateModal(${client.id})" class="px-2 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-md shadow flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-calendar-check"></i> Agli Tarik
+                            </button>
                         </div>
                     </td>
+                    <!-- Delete case functionality -->
                     <td class="py-3.5 px-5 text-center">
-                        <button onclick="deleteClient('${client.id}')" class="text-red-400 hover:text-red-500 bg-red-500/10 p-2 rounded-lg cursor-pointer"><i class="fa-solid fa-trash-can"></i></button>
+                        <button onclick="deleteClient(${client.id})" class="text-red-400 hover:text-red-500 bg-red-500/10 hover:bg-red-500/20 p-2 rounded-lg transition-all cursor-pointer" title="Case Hatayein">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
                     </td>
                 `;
                 tableBody.appendChild(tr);
@@ -482,101 +415,131 @@
             document.getElementById('count-alerts').innerText = redAlertCounter;
         }
 
-        // Camera Lockers Utilities
+        // Camera control engine
         async function startCamera() {
             const video = document.getElementById('webcam');
             const preview = document.getElementById('photo-preview');
             const captureBtn = document.getElementById('capture-btn');
+            
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
                 video.srcObject = stream;
-                video.classList.remove('hidden'); preview.classList.add('hidden'); captureBtn.classList.remove('hidden');
+                video.classList.remove('hidden');
+                preview.classList.add('hidden');
+                captureBtn.classList.remove('hidden');
                 streamTrack = stream.getTracks()[0];
-            } catch (err) { alert("Camera system initialized failed!"); }
+            } catch (err) {
+                alert("Camera connect nahi ho pa raha hai!");
+            }
         }
 
         function capturePhoto() {
             const video = document.getElementById('webcam');
             const canvas = document.getElementById('canvas');
             const preview = document.getElementById('photo-preview');
-            canvas.width = video.videoWidth; canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            const captureBtn = document.getElementById('capture-btn');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
             capturedBase64 = canvas.toDataURL('image/png');
             preview.src = capturedBase64;
+            
             if(streamTrack) streamTrack.stop();
-            video.classList.add('hidden'); preview.classList.remove('hidden'); document.getElementById('capture-btn').classList.add('hidden');
+            video.classList.add('hidden');
+            preview.classList.remove('hidden');
+            captureBtn.classList.add('hidden');
         }
 
-        function openAddClientModal() { document.getElementById('add-client-modal').classList.remove('hidden'); document.getElementById('c-date').value = realTodayStr; }
-        function closeAddClientModal() { if(streamTrack) streamTrack.stop(); document.getElementById('add-client-modal').classList.add('hidden'); document.getElementById('add-client-form').reset(); document.getElementById('photo-preview').src="https://placehold.co/150x150/1e293b/a1a1aa?text=No+Photo"; capturedBase64=""; }
+        function openAddClientModal() {
+            document.getElementById('add-client-modal').classList.remove('hidden');
+            document.getElementById('c-date').value = realTodayStr;
+        }
+
+        function closeAddClientModal() {
+            if(streamTrack) streamTrack.stop();
+            document.getElementById('add-client-modal').classList.add('hidden');
+            document.getElementById('add-client-form').reset();
+            document.getElementById('photo-preview').src = "https://placehold.co/150x150/1e293b/a1a1aa?text=No+Photo";
+            capturedBase64 = "";
+        }
 
         function saveClientWithPhoto(e) {
             e.preventDefault();
-            let dataArr = getClientsFromStorage();
-            dataArr.push({
-                id: Date.now().toString(),
+            const newObj = {
+                id: Date.now(),
                 name: document.getElementById('c-name').value,
                 whatsapp: document.getElementById('c-whatsapp').value,
                 caseInfo: document.getElementById('c-case').value,
                 courtName: document.getElementById('c-court').value,
                 date: document.getElementById('c-date').value,
                 img: capturedBase64
-            });
-            saveClientsToStorage(dataArr);
+            };
+
+            clients.push(newObj);
+            localStorage.setItem('adv_v3_clients', JSON.stringify(clients));
             closeAddClientModal();
             renderClients();
         }
 
+        // Delete client logic execution
         function deleteClient(id) {
-            if(confirm("Kya aap sach me is case registry ko database se permanent hatana chahte hain?")) {
-                let dataArr = getClientsFromStorage();
-                dataArr = dataArr.filter(c => c.id !== id);
-                saveClientsToStorage(dataArr);
+            if(confirm("Kya aap sach me is case/client ka data permanent hatana chahte hain?")) {
+                clients = clients.filter(c => c.id !== id);
+                localStorage.setItem('adv_v3_clients', JSON.stringify(clients));
                 renderClients();
             }
         }
 
-        function openNextDateModal(id) { document.getElementById('update-client-id').value = id; document.getElementById('new-hearing-date').value = realTodayStr; document.getElementById('next-date-modal').classList.remove('hidden'); }
-        function closeNextDateModal() { document.getElementById('next-date-modal').classList.add('hidden'); }
+        function openNextDateModal(id) {
+            document.getElementById('update-client-id').value = id;
+            document.getElementById('new-hearing-date').value = realTodayStr;
+            document.getElementById('next-date-modal').classList.remove('hidden');
+        }
+
+        function closeNextDateModal() {
+            document.getElementById('next-date-modal').classList.add('hidden');
+        }
 
         function saveNextHearingDate() {
             const id = document.getElementById('update-client-id').value;
-            const target = document.getElementById('new-hearing-date').value;
-            let dataArr = getClientsFromStorage();
-            const idx = dataArr.findIndex(c => c.id === id);
+            const targetDateStr = document.getElementById('new-hearing-date').value;
+            
+            const idx = clients.findIndex(c => c.id == id);
             if(idx !== -1) {
-                dataArr[idx].date = target;
-                saveClientsToStorage(dataArr);
+                clients[idx].date = targetDateStr;
+                localStorage.setItem('adv_v3_clients', JSON.stringify(clients));
                 closeNextDateModal();
                 renderClients();
                 triggerMessageEngine(id, 'next');
             }
         }
 
-        // WhatsApp Custom Engine Compiler
         function triggerMessageEngine(clientId, type) {
-            const localClients = getClientsFromStorage();
-            const client = localClients.find(c => c.id === clientId);
+            const client = clients.find(c => c.id == clientId);
             if(!client) return;
 
-            // Identity logic shift according to profile context parameters
-            const signatureName = (currentUser && currentUser.role === 'admin') ? "Himanshu Yadav" : currentUser.name;
-            let payload = "";
+            let textPayload = "";
 
             if(type === 'today') {
-                payload = `*न्यायालय आवश्यक सूचना ⚖️*\n\n` +
-                          `प्रिय *${client.name}*,\n` +
-                          `आपको सूचित किया जाता है कि आज दिनांक *${formatDateString(client.date)}* को आपका Case (*${client.caseInfo}*) सुनवाई के लिए *${client.courtName}* में लगा हुआ है। कृपया समय पर उपस्थित रहें।\n\n` +
-                          `*सम्पर्क करें:*\n` +
-                          `*Advocate ${signatureName}*`;
-            } else if(type === 'next') {
-                payload = `*न्यायालय आगामी तिथि सूचना ⚖️*\n\n` +
-                          `प्रिय *${client.name}*,\n` +
-                          `आपके Case (*${client.caseInfo}*) में आज सुनवाई के उपरान्त न्यायालय द्वारा अगली तिथि *${formatDateString(client.date)}* नियत की गई है। इसे अपने पास अवश्य नोट कर लें।\n\n` +
-                          `*सम्पर्क करें:*\n` +
-                          `*Advocate ${signatureName}*`;
+                textPayload = `*न्यायालय आवश्यक सूचना ⚖️*\n\n` +
+                              `प्रिय *${client.name}*,\n` +
+                              `आपको सूचित किया जाता है कि आज दिनांक *${formatDateString(client.date)}* को आपका केस (*${client.caseInfo}*) सुनवाई के लिए *${client.courtName}* में लगा हुआ है। कृपया समय पर उपस्थित रहें।\n\n` +
+                              `*सम्पर्क करें:*\n` +
+                              `*एडवोकेट हिमांशु यादव*\n` +
+                              `अधिवक्ता, कानपुर`;
+            } else if (type === 'next') {
+                textPayload = `*न्यायालय आगामी तिथि सूचना ⚖️*\n\n` +
+                              `प्रिय *${client.name}*,\n` +
+                              `आपके केस (*${client.caseInfo}*) में आज सुनवाई के उपरान्त न्यायालय द्वारा अगली तिथि *${formatDateString(client.date)}* नियत की गई है। इसे अपने पास अवश्य नोट कर लें।\n\n` +
+                              `*सम्पर्क करें:*\n` +
+                              `*एडवोकेट हिमांशु यादव*\n` +
+                              `अधिवक्ता, कानपुर`;
             }
-            window.open(`https://wa.me/${client.whatsapp}?text=${encodeURIComponent(payload)}`, '_blank');
+
+            window.open(`https://wa.me/${client.whatsapp}?text=${encodeURIComponent(textPayload)}`, '_blank');
         }
 
         function formatDateString(dateStr) {
@@ -585,30 +548,33 @@
             return d.toLocaleDateString('hi-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
 
-        // Data Management Backup Tools
+        // Backup Export & Import Tools Functions
         function exportBackup() {
-            const arr = getClientsFromStorage();
-            if(arr.length === 0) { alert("Database khali hai!"); return; }
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(arr));
-            const dl = document.createElement('a');
-            dl.setAttribute("href", dataStr);
-            dl.setAttribute("download", `Advocate_SafeBackup_${realTodayStr}.json`);
-            dl.click();
+            if(clients.length === 0) { alert("Backup lene ke liye database me data hona zaroori hai!"); return; }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(clients));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `Advocate_Database_Backup_${realTodayStr}.json`);
+            dlAnchorElem.click();
         }
+
         function triggerImport() { document.getElementById('import-file').click(); }
-        function importBackup(e) {
+
+        function importBackup(event) {
+            const input = event.target;
             const reader = new FileReader();
             reader.onload = function() {
                 try {
-                    const parsed = JSON.parse(reader.result);
-                    if(Array.isArray(parsed)) {
-                        saveClientsToStorage(parsed);
+                    const importedData = JSON.parse(reader.result);
+                    if(Array.isArray(importedData)) {
+                        clients = importedData;
+                        localStorage.setItem('adv_v3_clients', JSON.stringify(clients));
                         renderClients();
-                        alert("Data successfully restored!");
-                    }
-                } catch(err) { alert("Invalid Backup File!"); }
+                        alert("Database Backup successfully restore ho gaya hai!");
+                    } else { alert("Galat file format!"); }
+                } catch(e) { alert("File read karne me dikkat aayi!"); }
             };
-            if(e.target.files[0]) reader.readAsText(e.target.files[0]);
+            if(input.files[0]) reader.readAsText(input.files[0]);
         }
     </script>
 </body>
