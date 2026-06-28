@@ -3,259 +3,520 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Manager - Hi-Tech Dashboard</title>
+    <title>Advocate Himanshu Yadav - Enterprise CMS</title>
+    <!-- Tailwind CSS for modern premium dark UI -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .hidden { display: none; }
+        .red-alert-row {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.15) 0%, rgba(30, 41, 59, 0.5) 100%);
+            border-left: 4px solid #ef4444 !important;
+        }
+        .today-row {
+            background: linear-gradient(90deg, rgba(245, 158, 11, 0.1) 0%, rgba(30, 41, 59, 0.5) 100%);
+            border-left: 4px solid #f59e0b !important;
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
 
+    <!-- LOGIN SCREEN -->
     <div id="login-screen" class="flex items-center justify-center min-h-screen px-4">
-        <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700 w-full max-w-md">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-extrabold text-blue-500 tracking-wider">DATA MANAGER</h1>
-                <p class="text-slate-400 text-sm mt-2">Hi-Tech Document Analytics Portal</p>
+        <div class="max-w-md w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8 space-y-6">
+            <div class="text-center">
+                <div class="mx-auto h-16 w-16 bg-amber-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                    <i class="fa-solid fa-shield-halved text-2xl text-slate-950"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-white tracking-wide">Advocate Himanshu Yadav</h1>
+                <p class="text-slate-400 text-sm mt-1">Secured Legal Management System</p>
             </div>
             
-            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-6">
+            <form id="login-form" onsubmit="handleStrictLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Username</label>
-                    <input type="text" id="username" required autocomplete="off"
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 transition-colors">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Username</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </span>
+                        <input id="login-username" type="text" required class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 text-white font-mono" placeholder="adv@himanshu9810">
+                    </div>
                 </div>
+                
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Password</label>
-                    <input type="password" id="password" required
-                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 transition-colors">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fa-solid fa-key"></i>
+                        </span>
+                        <input id="login-password" type="password" required class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500 text-white font-mono" placeholder="••••••••••••">
+                    </div>
                 </div>
-                <p id="login-error" class="text-red-500 text-xs font-medium hidden">⚠️ गलत यूज़रनेम या पासवर्ड दर्ज किया गया है।</p>
-                <button type="submit" 
-                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-all transform active:scale-95 shadow-lg shadow-blue-600/30">
-                    Secure Login
+
+                <div class="text-red-400 text-xs hidden text-center font-medium p-2 bg-red-500/10 rounded-lg border border-red-500/20" id="login-error">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> Access Denied: Galat Username ya Password!
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-xl shadow-lg transition-all cursor-pointer">
+                    Unlock Dashboard <i class="fa-solid fa-lock-open ml-2"></i>
                 </button>
             </form>
         </div>
     </div>
 
+    <!-- MAIN DASHBOARD SCREEN -->
     <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
-        <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center shadow-md">
-            <div class="flex items-center space-x-3">
-                <span class="text-2xl font-black text-blue-500 tracking-wider">DATA MANAGER <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-mono ml-2">v1.0 Pro</span></span>
+        <!-- Top Nav Header -->
+        <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-scale-balanced text-lg text-slate-950"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-white leading-tight">Advocate Himanshu Yadav</h2>
+                    <!-- Kitni der pehle login hua tracker label -->
+                    <p class="text-xs text-slate-400 flex items-center gap-1.5 mt-0.5" id="last-login-timer">
+                        <i class="fa-solid fa-clock text-slate-500"></i> Loading session tracker...
+                    </p>
+                </div>
             </div>
-            <div class="flex items-center space-x-4">
-                <span class="text-slate-300 text-sm font-medium">Welcome, <span class="text-blue-400">Advocate Himanshu</span></span>
-                <button onclick="handleLogout()" class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold px-3 py-1.5 rounded-lg transition-colors border border-red-500/20">
-                    Logout
+            
+            <div class="flex items-center gap-3 w-full md:w-auto justify-end">
+                <button onclick="openAddClientModal()" class="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold rounded-lg text-sm flex items-center gap-2 cursor-pointer shadow">
+                    <i class="fa-solid fa-user-plus"></i> Naya Client + Camera
+                </button>
+                <button onclick="handleLogout()" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg text-sm cursor-pointer">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
                 </button>
             </div>
         </header>
 
-        <main class="flex-1 p-6 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Body Grid -->
+        <main class="flex-1 p-6 max-w-7xl w-full mx-auto space-y-6">
             
-            <div class="space-y-6 lg:col-span-1">
-                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
-                    <h2 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">📁 Heavy File Upload</h2>
-                    <div class="border-2 border-dashed border-slate-600 hover:border-blue-500 rounded-xl p-6 text-center cursor-pointer transition-colors bg-slate-900/50 group">
-                        <input type="file" id="file-uploader" class="hidden" accept=".pdf, .xlsx, .xls" onchange="simulateUpload(event)">
-                        <label for="file-uploader" class="cursor-pointer block">
-                            <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform">⚡</span>
-                            <span class="block text-sm text-slate-300 font-medium">Click to Upload File</span>
-                            <span class="block text-xs text-slate-500 mt-1">PDF, Excel up to 500MB+</span>
-                        </label>
+            <!-- Statistics Widget -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold uppercase">Total Database</p>
+                        <h3 class="text-2xl font-bold text-white mt-1" id="count-total">0</h3>
                     </div>
-                    <div id="progress-container" class="mt-4 hidden">
-                        <div class="flex justify-between text-xs mb-1">
-                            <span id="upload-status" class="text-blue-400 font-medium">Uploading...</span>
-                            <span id="progress-percent" class="text-slate-400">0%</span>
-                        </div>
-                        <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
-                            <div id="progress-bar" class="bg-blue-500 h-full w-0 transition-all duration-300"></div>
-                        </div>
-                    </div>
+                    <i class="fa-solid fa-folder-closed text-2xl text-blue-400 bg-blue-500/10 p-3 rounded-lg"></i>
                 </div>
-
-                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
-                    <h2 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">💬 Masked Virtual SMS</h2>
-                    <div class="space-y-4">
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <label class="block text-xs text-slate-400 mb-1">Serial From</label>
-                                <input type="number" placeholder="1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-400 mb-1">Serial To</label>
-                                <input type="number" placeholder="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-400 mb-1">Masked Sender Name / ID</label>
-                            <input type="text" value="ADVHMS" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-blue-400 font-bold focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-400 mb-1">Message Content</label>
-                            <textarea rows="3" placeholder="अपना मैसेज यहाँ टाइप करें..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 resize-none"></textarea>
-                        </div>
-                        <button onclick="alert('Masked Bulk SMS sent successfully!')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition-colors text-sm shadow-md">
-                            🎯 Send Masked Bulk SMS
-                        </button>
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-amber-400 font-semibold uppercase">🚨 Today's Hearings</p>
+                        <h3 class="text-2xl font-bold text-amber-400 mt-1" id="count-today">0</h3>
                     </div>
+                    <i class="fa-solid fa-gavel text-2xl text-amber-400 bg-amber-500/10 p-3 rounded-lg"></i>
+                </div>
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-red-400 font-semibold uppercase">⚠️ 1-Day Red Alerts</p>
+                        <h3 class="text-2xl font-bold text-red-400 mt-1" id="count-alerts">0</h3>
+                    </div>
+                    <i class="fa-solid fa-circle-exclamation text-2xl text-red-400 bg-red-500/10 p-3 rounded-lg animate-pulse"></i>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 space-y-6">
-                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl flex flex-col md:flex-row gap-4 justify-between items-end">
-                    <div class="flex-1 w-full">
-                        <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider font-bold">AI Smart Filter (Type: Yadav, K Block, or Female)</label>
-                        <input type="text" id="ai-search" placeholder="Type query here..."
-                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 transition-all placeholder-slate-500">
-                    </div>
-                    <div class="flex gap-2 w-full md:w-auto">
-                        <button onclick="filterAndShowData()" class="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-1">
-                            🔍 Show Filtered Data
-                        </button>
-                        <button onclick="downloadData()" class="flex-1 md:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl font-bold text-sm transition-colors shadow-md">
-                            📥 Download
-                        </button>
-                    </div>
+            <!-- Search & Controls Filter -->
+            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex flex-col sm:flex-row justify-between gap-4">
+                <div class="relative flex-1">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                    </span>
+                    <input id="search-bar" oninput="renderClients()" type="text" class="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-sm text-white focus:outline-none focus:border-amber-500" placeholder="Naam ya case number se turant dhoondein...">
                 </div>
+                <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 px-3 py-2 rounded-lg text-xs">
+                    <span class="text-slate-400"><i class="fa-solid fa-calendar-days"></i> System Date Simulator:</span>
+                    <input type="date" id="system-date" onchange="renderClients()" class="bg-transparent text-white font-bold cursor-pointer focus:outline-none">
+                </div>
+            </div>
 
-                <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden">
-                    <div class="px-6 py-4 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center">
-                        <h3 class="font-bold text-slate-200 flex items-center gap-2">📊 Live Extracted Records</h3>
-                        <span id="record-count" class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded font-mono font-bold">Showing: 4 Rows</span>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm text-slate-300">
-                            <thead class="bg-slate-900 text-slate-400 uppercase text-xs tracking-wider">
-                                <tr>
-                                    <th class="px-6 py-3.5">Sr No.</th>
-                                    <th class="px-6 py-3.5">Name</th>
-                                    <th class="px-6 py-3.5">Father/Spouse (S/O)</th>
-                                    <th class="px-6 py-3.5">Address</th>
-                                    <th class="px-6 py-3.5">Gender (AI Mode)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="data-table-body" class="divide-y divide-slate-700">
-                                </tbody>
-                        </table>
-                    </div>
+            <!-- Main Client Table -->
+            <div class="bg-slate-800 rounded-xl border border-slate-700 shadow-xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900 text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-700">
+                                <th class="py-3.5 px-5">Photo</th>
+                                <th class="py-3.5 px-5">Client Name</th>
+                                <th class="py-3.5 px-5">WhatsApp</th>
+                                <th class="py-3.5 px-5">Case Info & Court</th>
+                                <th class="py-3.5 px-5">Current Hearing</th>
+                                <th class="py-3.5 px-5 text-center">Smart Actions (1-Click)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="client-table-body" class="divide-y divide-slate-700/50 text-sm">
+                            <!-- JS Inject Rows -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
 
-    <script>
-        const CORRECT_USER = "adv@himanshu9810";
-        const CORRECT_PASS = "adv@himanshu14791";
+    <!-- MODAL: ADD CLIENT & CAMERA CAPTURE -->
+    <div id="add-client-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-5 border-b border-slate-700 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-shield text-amber-500"></i> Advanced Client Record System
+                </h3>
+                <button onclick="closeAddClientModal()" class="text-slate-400 hover:text-white cursor-pointer"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            
+            <form id="add-client-form" onsubmit="saveClientWithPhoto(event)" class="p-6 space-y-4">
+                
+                <!-- Camera UI Section -->
+                <div class="bg-slate-900 p-4 rounded-xl border border-slate-700 flex flex-col items-center justify-center gap-3">
+                    <div class="text-xs text-slate-400 font-semibold uppercase tracking-wider">Live Photo Capture Locker</div>
+                    <video id="webcam" autoplay playsinline class="w-48 h-36 bg-black rounded-lg border border-slate-700 hidden object-cover"></video>
+                    <canvas id="canvas" class="hidden"></canvas>
+                    <img id="photo-preview" src="https://placehold.co/150x150/1e293b/a1a1aa?text=No+Photo" class="w-24 h-24 rounded-full object-cover border-2 border-slate-600 shadow-md">
+                    
+                    <div class="flex gap-2">
+                        <button type="button" onclick="startCamera()" class="px-3 py-1.5 bg-slate-700 text-xs text-slate-200 rounded-lg hover:bg-slate-600"><i class="fa-solid fa-camera mr-1"></i> Open Camera</button>
+                        <button type="button" onclick="capturePhoto()" id="capture-btn" class="px-3 py-1.5 bg-blue-600 text-xs text-white rounded-lg hover:bg-blue-500 hidden"><i class="fa-solid fa-circle text-red-500 mr-1 animate-pulse"></i> Capture</button>
+                    </div>
+                </div>
 
-        // मास्टर डमी डेटा लिस्ट
-        const masterData = [
-            { id: 1, name: "Rahul Yadav", so: "Ram Singh Yadav", address: "K Block, House 12, Kanpur", gender: "Male" },
-            { id: 2, name: "Sunita Devi", so: "Suresh Kumar", address: "L Block, House 45, Kanpur", gender: "Female" },
-            { id: 3, name: "Akhilesh Yadav", so: "M. S. Yadav", address: "K Block, House 88, Kanpur", gender: "Male" },
-            { id: 4, name: "Priya Kumari", so: "Rajesh Yadav", address: "A Block, House 03, Kanpur", gender: "Female" }
+                <!-- Form Fields -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Client Ka Naam *</label>
+                        <input type="text" id="c-name" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">WhatsApp Number (With Country Code) *</label>
+                        <input type="tel" id="c-whatsapp" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-white font-mono text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. 919876543210">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Case Name / Number *</label>
+                        <input type="text" id="c-case" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. Criminal Case 412/2026">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Court Ka Vivran *</label>
+                        <input type="text" id="c-court" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none" placeholder="e.g. District Court, Kanpur">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Hearing / Tarik Ki Date *</label>
+                    <input type="date" id="c-date" required class="w-full px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-amber-500 focus:outline-none">
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-700">
+                    <button type="button" onclick="closeAddClientModal()" class="px-4 py-2 bg-slate-700 text-slate-300 font-semibold rounded-lg text-xs">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-500 text-slate-950 font-bold rounded-lg text-xs shadow"><i class="fa-solid fa-floppy-disk mr-1"></i> Master Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: NEXT DATE UPDATE ENGINE -->
+    <div id="next-date-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl w-full max-w-sm shadow-2xl p-6 space-y-4">
+            <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calendar-plus text-amber-500"></i> Court Agli Tarik (Next Date) Update</h3>
+            <input type="hidden" id="update-client-id">
+            <div>
+                <label class="block text-xs text-slate-400 mb-1">Nayi Hearing Date Chunein</label>
+                <input type="date" id="new-hearing-date" class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeNextDateModal()" class="px-3 py-2 bg-slate-700 text-slate-300 text-xs rounded-lg">Cancel</button>
+                <button onclick="saveNextHearingDate()" class="px-4 py-2 bg-emerald-500 text-slate-950 font-bold text-xs rounded-lg shadow">Set Agli Tarik & Alert</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUSINESS INTELLIGENCE SCRIPT -->
+    <script>
+        const realTodayStr = new Date().toISOString().split('T')[0];
+        let streamTrack = null;
+        let capturedBase64 = "";
+
+        // Core Array Database logic
+        let clients = JSON.parse(localStorage.getItem('adv_v2_clients')) || [
+            { id: 1, name: "Ramesh Chand", whatsapp: "919876543210", caseInfo: "Criminal Status Case 102/2026", courtName: "CMM Court Room 2, Kanpur", date: "2026-12-05", img: "" },
+            { id: 2, name: "Satish Pal", whatsapp: "919123456789", caseInfo: "Bail Appl 44/2026", courtName: "Session Court, Kanpur Nagar", date: realTodayStr, img: "" }
         ];
 
-        // लॉगिन और लॉगआउट लॉजिक
-        function handleLogin(event) {
-            event.preventDefault();
-            if (document.getElementById("username").value === CORRECT_USER && document.getElementById("password").value === CORRECT_PASS) {
-                document.getElementById("login-screen").classList.add("hidden");
-                document.getElementById("dashboard-screen").classList.remove("hidden");
-                renderTable(masterData); // शुरुआत में सारा डेटा दिखाएं
+        window.onload = function() {
+            document.getElementById('system-date').value = realTodayStr;
+            if (sessionStorage.getItem('strict_logged_in') === 'true') {
+                showDashboard();
             } else {
-                document.getElementById("login-error").classList.remove("hidden");
+                showLogin();
             }
+        };
+
+        // Strict custom credentials matching logic requested by user
+        function handleStrictLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('login-username').value.trim();
+            const p = document.getElementById('login-password').value.trim();
+
+            if (u === 'adv@himanshu9810' && p === 'adv@himanshu14791') {
+                sessionStorage.setItem('strict_logged_in', 'true');
+                // Store accurate epoch timestamp for time lapse calculations
+                localStorage.setItem('last_login_epoch', Date.now().toString());
+                document.getElementById('login-error').classList.add('hidden');
+                showDashboard();
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('dashboard-screen').classList.add('hidden');
+        }
+
+        function showDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+            calculateTimeLapse();
+            renderClients();
         }
 
         function handleLogout() {
-            document.getElementById("dashboard-screen").classList.add("hidden");
-            document.getElementById("login-screen").classList.remove("hidden");
-            document.getElementById("login-form").reset();
+            sessionStorage.removeItem('strict_logged_in');
+            showLogin();
         }
 
-        // टेबल में डेटा रेंडर (दिखाने) करने का फंक्शन
-        function renderTable(dataList) {
-            const tbody = document.getElementById("data-table-body");
-            tbody.innerHTML = "";
+        // Time calculation function (Kitne der pehle login hua tha)
+        function calculateTimeLapse() {
+            const lastEpoch = localStorage.getItem('last_login_epoch');
+            const timerLabel = document.getElementById('last-login-timer');
             
-            if(dataList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500 font-medium">कोई डेटा नहीं मिला। सही कीवर्ड डालें।</td></tr>`;
-                document.getElementById("record-count").innerText = "Showing: 0 Rows";
+            if(!lastEpoch) {
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Abhi Abhi pehli baar login kiya gaya`;
                 return;
             }
 
-            dataList.forEach(row => {
-                const genderBadge = row.gender === "Female" 
-                    ? `<span class="bg-pink-500/10 text-pink-400 text-xs font-bold px-2.5 py-1 rounded-full border border-pink-500/20">Female (AI-Name)</span>`
-                    : `<span class="bg-blue-500/10 text-blue-400 text-xs font-bold px-2.5 py-1 rounded-full border border-blue-500/20">Male</span>`;
+            const diffMs = Date.now() - parseInt(lastEpoch);
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 6000);
 
-                tbody.innerHTML += `
-                    <tr class="hover:bg-slate-700/30 transition-colors">
-                        <td class="px-6 py-4 font-mono font-bold text-blue-400">${row.id}</td>
-                        <td class="px-6 py-4 font-medium">${row.name}</td>
-                        <td class="px-6 py-4 text-slate-400">${row.so}</td>
-                        <td class="px-6 py-4 text-slate-400">${row.address}</td>
-                        <td class="px-6 py-4">${genderBadge}</td>
-                    </tr>
-                `;
-            });
-            document.getElementById("record-count").innerText = `Showing: ${dataList.length} Rows`;
-        }
-
-        // नया फीचर: डेटा को छानकर पहले स्क्रीन पर दिखाना (Show Data Logic)
-        let filteredRecords = [...masterData]; 
-
-        function filterAndShowData() {
-            const query = document.getElementById("ai-search").value.toLowerCase().trim();
-            
-            if (query === "") {
-                filteredRecords = [...masterData];
+            if (diffMins < 1) {
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne abhi 1 minute se kam samay pehle login kiya tha`;
+            } else if (diffHours < 1) {
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne isse pehle ${diffMins} minute pehle login kiya tha`;
             } else {
-                filteredRecords = masterData.filter(row => {
-                    // AI इंटेलिजेंस रूल: जेंडर चेक करते समय S/O का नाम छोड़ देगा
-                    if (query === "female") {
-                        return row.gender.toLowerCase() === "female";
-                    }
-                    return row.name.toLowerCase().includes(query) || 
-                           row.address.toLowerCase().includes(query) ||
-                           row.so.toLowerCase().includes(query);
-                });
+                timerLabel.innerHTML = `<i class="fa-solid fa-circle-nodes text-emerald-400"></i> Aapne isse pehle ${diffHours} ghante pehle login kiya tha`;
             }
-            
-            // डेटा को पहले स्क्रीन पर दिखाएं
-            renderTable(filteredRecords);
-            alert(`सर्च कम्प्लीट! स्क्रीन पर केवल वही ${filteredRecords.length} रिकॉर्ड दिखाए गए हैं जो आप देखना चाहते थे। अब आप इसे चेक करके डाउनलोड कर सकते हैं।`);
         }
 
-        // डाउनलोड अलर्ट (यह लाइव होने पर चुनिंदा डेटा की एक्सेल फाइल डाउनलोड कराएगा)
-        function downloadData() {
-            alert(`सफलतापूर्वक! स्क्रीन पर दिख रहे कुल ${filteredRecords.length} रिकॉर्ड डाउनलोड हो रहे हैं...`);
-        }
-
-        // नकली अपलोड प्रोग्रेस बार
-        function simulateUpload(event) {
-            if (!event.target.files.length) return;
-            const pContainer = document.getElementById("progress-container");
-            const pBar = document.getElementById("progress-bar");
-            const pPercent = document.getElementById("progress-percent");
-            const pStatus = document.getElementById("upload-status");
-
-            pContainer.classList.remove("hidden");
-            pStatus.innerText = "Analyzing file chunks...";
+        // Advanced Dynamic Table Render Algorithm (Red Alert Calculation Included)
+        function renderClients() {
+            const tableBody = document.getElementById('client-table-body');
+            const currentSysDateStr = document.getElementById('system-date').value;
+            const searchKeyword = document.getElementById('search-bar').value.toLowerCase();
             
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 10;
-                pBar.style.width = progress + "%";
-                pPercent.innerText = progress + "%";
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    pStatus.innerText = "✅ Saved & Ready to Analyze!";
-                    pStatus.classList.replace("text-blue-400", "text-emerald-400");
+            tableBody.innerHTML = '';
+            
+            // Core Metric calculations
+            let totalCounter = 0;
+            let todayCounter = 0;
+            let redAlertCounter = 0;
+
+            clients.forEach(client => {
+                // Search optimization filter
+                if(searchKeyword && !client.name.toLowerCase().includes(searchKeyword) && !client.caseInfo.toLowerCase().includes(searchKeyword)) {
+                    return; 
                 }
-            }, 80);
+
+                totalCounter++;
+
+                // Date evaluation mechanisms
+                const clientDateObj = new Date(client.date);
+                const sysDateObj = new Date(currentSysDateStr);
+                
+                // Difference in days logic execution
+                const timeDiff = clientDateObj.getTime() - sysDateObj.getTime();
+                const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                let customRowStyle = "";
+                let statusBadge = `<span class="text-slate-400 font-medium">${formatDateString(client.date)}</span>`;
+
+                if (dayDiff === 0) {
+                    todayCounter++;
+                    customRowStyle = "today-row";
+                    statusBadge = `<span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 font-bold text-xs rounded border border-amber-500/30 flex items-center gap-1 w-max"><i class="fa-solid fa-clock animate-pulse"></i> Aaj Hearing Hai</span>`;
+                } else if (dayDiff === 1) {
+                    redAlertCounter++;
+                    customRowStyle = "red-alert-row"; // 1 din pehle automatic raw bright red ho jayega
+                    statusBadge = `<span class="px-2 py-0.5 bg-red-500/20 text-red-400 font-bold text-xs rounded border border-red-500/30 flex items-center gap-1 w-max animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i> Kal Hearing Hai (Alert)</span>`;
+                }
+
+                // Render image fallback configuration
+                const avatar = client.img ? client.img : `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(client.name)}`;
+
+                const tr = document.createElement('tr');
+                if(customRowStyle) tr.className = customRowStyle;
+                tr.className += " hover:bg-slate-700/20 transition-all";
+                
+                tr.innerHTML = `
+                    <td class="py-3.5 px-5"><img src="${avatar}" class="w-9 h-9 rounded-full object-cover border border-slate-600"></td>
+                    <td class="py-3.5 px-5 font-bold text-white">${client.name}</td>
+                    <td class="py-3.5 px-5 font-mono text-slate-300 hover:text-emerald-400"><i class="fa-brands fa-whatsapp text-emerald-400"></i> +${client.whatsapp}</td>
+                    <td class="py-3.5 px-5">
+                        <div class="text-white font-medium">${client.caseInfo}</div>
+                        <div class="text-xs text-slate-400 mt-0.5"><i class="fa-solid fa-gavel text-slate-500"></i> ${client.courtName}</div>
+                    </td>
+                    <td class="py-3.5 px-5">${statusBadge}</td>
+                    <td class="py-3.5 px-5">
+                        <div class="flex items-center justify-center gap-2">
+                            <button onclick="triggerMessageEngine(${client.id}, 'today')" class="px-2 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-md shadow flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-paper-plane"></i> Today Message
+                            </button>
+                            <button onclick="openNextDateModal(${client.id})" class="px-2 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-md shadow flex items-center gap-1 cursor-pointer">
+                                <i class="fa-solid fa-calendar-check"></i> Update Agli Tarik
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // Sync metrics cards UI elements
+            document.getElementById('count-total').innerText = totalCounter;
+            document.getElementById('count-today').innerText = todayCounter;
+            document.getElementById('count-alerts').innerText = redAlertCounter;
+        }
+
+        // Live Web-Camera Lockers Access Engine
+        async function startCamera() {
+            const video = document.getElementById('webcam');
+            const preview = document.getElementById('photo-preview');
+            const captureBtn = document.getElementById('capture-btn');
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                video.srcObject = stream;
+                video.classList.remove('hidden');
+                preview.classList.add('hidden');
+                captureBtn.classList.remove('hidden');
+                streamTrack = stream.getTracks()[0];
+            } catch (err) {
+                alert("Camera permission block hai ya hardware disconnected hai!");
+            }
+        }
+
+        function capturePhoto() {
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('canvas');
+            const preview = document.getElementById('photo-preview');
+            const captureBtn = document.getElementById('capture-btn');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            capturedBase64 = canvas.toDataURL('image/png');
+            preview.src = capturedBase64;
+            
+            // Release hardware camera resources
+            if(streamTrack) streamTrack.stop();
+            video.classList.add('hidden');
+            preview.classList.remove('hidden');
+            captureBtn.classList.add('hidden');
+        }
+
+        function openAddClientModal() {
+            document.getElementById('add-client-modal').classList.remove('hidden');
+            document.getElementById('c-date').value = realTodayStr;
+        }
+
+        function closeAddClientModal() {
+            if(streamTrack) streamTrack.stop();
+            document.getElementById('add-client-modal').classList.add('hidden');
+            document.getElementById('add-client-form').reset();
+            document.getElementById('photo-preview').src = "https://placehold.co/150x150/1e293b/a1a1aa?text=No+Photo";
+            capturedBase64 = "";
+        }
+
+        function saveClientWithPhoto(e) {
+            e.preventDefault();
+            const newObj = {
+                id: Date.now(),
+                name: document.getElementById('c-name').value,
+                whatsapp: document.getElementById('c-whatsapp').value,
+                caseInfo: document.getElementById('c-case').value,
+                courtName: document.getElementById('c-court').value,
+                date: document.getElementById('c-date').value,
+                img: capturedBase64
+            };
+
+            clients.push(newObj);
+            localStorage.setItem('adv_v2_clients', JSON.stringify(clients));
+            closeAddClientModal();
+            renderClients();
+        }
+
+        // Agli Tarik Modal Triggers
+        function openNextDateModal(id) {
+            document.getElementById('update-client-id').value = id;
+            document.getElementById('new-hearing-date').value = realTodayStr;
+            document.getElementById('next-date-modal').classList.remove('hidden');
+        }
+
+        function closeNextDateModal() {
+            document.getElementById('next-date-modal').classList.add('hidden');
+        }
+
+        function saveNextHearingDate() {
+            const id = document.getElementById('update-client-id').value;
+            const targetDateStr = document.getElementById('new-hearing-date').value;
+            
+            const idx = clients.findIndex(c => c.id == id);
+            if(idx !== -1) {
+                clients[idx].date = targetDateStr;
+                localStorage.setItem('adv_v2_clients', JSON.stringify(clients));
+                closeNextDateModal();
+                renderClients();
+                
+                // Agli date set karte hi automatic notification window fire karega text ke sath
+                triggerMessageEngine(id, 'next');
+            }
+        }
+
+        // WhatsApp Communication Engine
+        function triggerMessageEngine(clientId, type) {
+            const client = clients.find(c => c.id == clientId);
+            if(!client) return;
+
+            let textPayload = "";
+
+            if(type === 'today') {
+                textPayload = `*न्यायालय आवश्यक सूचना ⚖️*\n\n` +
+                              `प्रिय *${client.name}*,\n` +
+                              `आपको सूचित किया जाता है कि आज दिनांक *${formatDateString(client.date)}* को आपका केस (*${client.caseInfo}*) सुनवाई के लिए *${client.courtName}* में लगा हुआ है। कृपया समय पर उपस्थित रहें।\n\n` +
+                              `*सम्पर्क करें:*\n` +
+                              `*एडवोकेट हिमांशु यादव*\n` +
+                              `अधिवक्ता, कानपुर`;
+            } else if (type === 'next') {
+                textPayload = `*न्यायालय आगामी तिथि सूचना ⚖️*\n\n` +
+                              `प्रिय *${client.name}*,\n` +
+                              `आपके केस (*${client.caseInfo}*) में आज सुनवाई के उपरान्त न्यायालय द्वारा अगली तिथि *${formatDateString(client.date)}* नियत की गई है। इसे अपने पास अवश्य नोट कर लें।\n\n` +
+                              `*सम्पर्क करें:*\n` +
+                              `*एडवोकेट हिमांशु यादव*\n` +
+                              `अधिवक्ता, कानपुर`;
+            }
+
+            const finalUrl = `https://wa.me/${client.whatsapp}?text=${encodeURIComponent(textPayload)}`;
+            window.open(finalUrl, '_blank');
+        }
+
+        function formatDateString(dateStr) {
+            if(!dateStr) return '';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('hi-IN', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
     </script>
 </body>
