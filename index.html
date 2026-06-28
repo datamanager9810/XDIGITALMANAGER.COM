@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Manager - Hi-Tech Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
+
+    <div id="login-screen" class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl border border-slate-700 w-full max-w-md">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-extrabold text-blue-500 tracking-wider">DATA MANAGER</h1>
+                <p class="text-slate-400 text-sm mt-2">Hi-Tech Document Analytics Portal</p>
+            </div>
+            
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Username</label>
+                    <input type="text" id="username" required autocomplete="off"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Password</label>
+                    <input type="password" id="password" required
+                        class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 transition-colors">
+                </div>
+                <p id="login-error" class="text-red-500 text-xs font-medium hidden">⚠️ गलत यूज़रनेम या पासवर्ड दर्ज किया गया है।</p>
+                <button type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-all transform active:scale-95 shadow-lg shadow-blue-600/30">
+                    Secure Login
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" class="hidden min-h-screen flex flex-col">
+        <header class="bg-slate-800 border-b border-slate-700 px-6 py-4 flex justify-between items-center shadow-md">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl font-black text-blue-500 tracking-wider">DATA MANAGER <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-mono ml-2">v1.0 Pro</span></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-slate-300 text-sm font-medium">Welcome, <span class="text-blue-400">Advocate Himanshu</span></span>
+                <button onclick="handleLogout()" class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold px-3 py-1.5 rounded-lg transition-colors border border-red-500/20">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 p-6 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="space-y-6 lg:col-span-1">
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                    <h2 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">📁 Heavy File Upload</h2>
+                    <div class="border-2 border-dashed border-slate-600 hover:border-blue-500 rounded-xl p-6 text-center cursor-pointer transition-colors bg-slate-900/50 group">
+                        <input type="file" id="file-uploader" class="hidden" accept=".pdf, .xlsx, .xls" onchange="simulateUpload(event)">
+                        <label for="file-uploader" class="cursor-pointer block">
+                            <span class="text-4xl block mb-2 group-hover:scale-110 transition-transform">⚡</span>
+                            <span class="block text-sm text-slate-300 font-medium">Click to Upload File</span>
+                            <span class="block text-xs text-slate-500 mt-1">PDF, Excel up to 500MB+</span>
+                        </label>
+                    </div>
+                    <div id="progress-container" class="mt-4 hidden">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span id="upload-status" class="text-blue-400 font-medium">Uploading...</span>
+                            <span id="progress-percent" class="text-slate-400">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="bg-blue-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl">
+                    <h2 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">💬 Masked Virtual SMS</h2>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Serial From</label>
+                                <input type="number" placeholder="1" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Serial To</label>
+                                <input type="number" placeholder="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Masked Sender Name / ID</label>
+                            <input type="text" value="ADVHMS" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-blue-400 font-bold focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Message Content</label>
+                            <textarea rows="3" placeholder="अपना मैसेज यहाँ टाइप करें..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 resize-none"></textarea>
+                        </div>
+                        <button onclick="alert('Masked Bulk SMS sent successfully!')" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-lg transition-colors text-sm shadow-md">
+                            🎯 Send Masked Bulk SMS
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl flex flex-col md:flex-row gap-4 justify-between items-end">
+                    <div class="flex-1 w-full">
+                        <label class="block text-xs text-slate-400 mb-1 uppercase tracking-wider font-bold">AI Smart Filter (Type: Yadav, K Block, or Female)</label>
+                        <input type="text" id="ai-search" placeholder="Type query here..."
+                            class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-blue-500 transition-all placeholder-slate-500">
+                    </div>
+                    <div class="flex gap-2 w-full md:w-auto">
+                        <button onclick="filterAndShowData()" class="flex-1 md:flex-none bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl font-bold text-sm transition-colors shadow-md flex items-center justify-center gap-1">
+                            🔍 Show Filtered Data
+                        </button>
+                        <button onclick="downloadData()" class="flex-1 md:flex-none bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl font-bold text-sm transition-colors shadow-md">
+                            📥 Download
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-xl overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-700 bg-slate-800/50 flex justify-between items-center">
+                        <h3 class="font-bold text-slate-200 flex items-center gap-2">📊 Live Extracted Records</h3>
+                        <span id="record-count" class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded font-mono font-bold">Showing: 4 Rows</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-300">
+                            <thead class="bg-slate-900 text-slate-400 uppercase text-xs tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-3.5">Sr No.</th>
+                                    <th class="px-6 py-3.5">Name</th>
+                                    <th class="px-6 py-3.5">Father/Spouse (S/O)</th>
+                                    <th class="px-6 py-3.5">Address</th>
+                                    <th class="px-6 py-3.5">Gender (AI Mode)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="data-table-body" class="divide-y divide-slate-700">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const CORRECT_USER = "adv@himanshu9810";
+        const CORRECT_PASS = "adv@himanshu14791";
+
+        // मास्टर डमी डेटा लिस्ट
+        const masterData = [
+            { id: 1, name: "Rahul Yadav", so: "Ram Singh Yadav", address: "K Block, House 12, Kanpur", gender: "Male" },
+            { id: 2, name: "Sunita Devi", so: "Suresh Kumar", address: "L Block, House 45, Kanpur", gender: "Female" },
+            { id: 3, name: "Akhilesh Yadav", so: "M. S. Yadav", address: "K Block, House 88, Kanpur", gender: "Male" },
+            { id: 4, name: "Priya Kumari", so: "Rajesh Yadav", address: "A Block, House 03, Kanpur", gender: "Female" }
+        ];
+
+        // लॉगिन और लॉगआउट लॉजिक
+        function handleLogin(event) {
+            event.preventDefault();
+            if (document.getElementById("username").value === CORRECT_USER && document.getElementById("password").value === CORRECT_PASS) {
+                document.getElementById("login-screen").classList.add("hidden");
+                document.getElementById("dashboard-screen").classList.remove("hidden");
+                renderTable(masterData); // शुरुआत में सारा डेटा दिखाएं
+            } else {
+                document.getElementById("login-error").classList.remove("hidden");
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById("dashboard-screen").classList.add("hidden");
+            document.getElementById("login-screen").classList.remove("hidden");
+            document.getElementById("login-form").reset();
+        }
+
+        // टेबल में डेटा रेंडर (दिखाने) करने का फंक्शन
+        function renderTable(dataList) {
+            const tbody = document.getElementById("data-table-body");
+            tbody.innerHTML = "";
+            
+            if(dataList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-8 text-center text-slate-500 font-medium">कोई डेटा नहीं मिला। सही कीवर्ड डालें।</td></tr>`;
+                document.getElementById("record-count").innerText = "Showing: 0 Rows";
+                return;
+            }
+
+            dataList.forEach(row => {
+                const genderBadge = row.gender === "Female" 
+                    ? `<span class="bg-pink-500/10 text-pink-400 text-xs font-bold px-2.5 py-1 rounded-full border border-pink-500/20">Female (AI-Name)</span>`
+                    : `<span class="bg-blue-500/10 text-blue-400 text-xs font-bold px-2.5 py-1 rounded-full border border-blue-500/20">Male</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-700/30 transition-colors">
+                        <td class="px-6 py-4 font-mono font-bold text-blue-400">${row.id}</td>
+                        <td class="px-6 py-4 font-medium">${row.name}</td>
+                        <td class="px-6 py-4 text-slate-400">${row.so}</td>
+                        <td class="px-6 py-4 text-slate-400">${row.address}</td>
+                        <td class="px-6 py-4">${genderBadge}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById("record-count").innerText = `Showing: ${dataList.length} Rows`;
+        }
+
+        // नया फीचर: डेटा को छानकर पहले स्क्रीन पर दिखाना (Show Data Logic)
+        let filteredRecords = [...masterData]; 
+
+        function filterAndShowData() {
+            const query = document.getElementById("ai-search").value.toLowerCase().trim();
+            
+            if (query === "") {
+                filteredRecords = [...masterData];
+            } else {
+                filteredRecords = masterData.filter(row => {
+                    // AI इंटेलिजेंस रूल: जेंडर चेक करते समय S/O का नाम छोड़ देगा
+                    if (query === "female") {
+                        return row.gender.toLowerCase() === "female";
+                    }
+                    return row.name.toLowerCase().includes(query) || 
+                           row.address.toLowerCase().includes(query) ||
+                           row.so.toLowerCase().includes(query);
+                });
+            }
+            
+            // डेटा को पहले स्क्रीन पर दिखाएं
+            renderTable(filteredRecords);
+            alert(`सर्च कम्प्लीट! स्क्रीन पर केवल वही ${filteredRecords.length} रिकॉर्ड दिखाए गए हैं जो आप देखना चाहते थे। अब आप इसे चेक करके डाउनलोड कर सकते हैं।`);
+        }
+
+        // डाउनलोड अलर्ट (यह लाइव होने पर चुनिंदा डेटा की एक्सेल फाइल डाउनलोड कराएगा)
+        function downloadData() {
+            alert(`सफलतापूर्वक! स्क्रीन पर दिख रहे कुल ${filteredRecords.length} रिकॉर्ड डाउनलोड हो रहे हैं...`);
+        }
+
+        // नकली अपलोड प्रोग्रेस बार
+        function simulateUpload(event) {
+            if (!event.target.files.length) return;
+            const pContainer = document.getElementById("progress-container");
+            const pBar = document.getElementById("progress-bar");
+            const pPercent = document.getElementById("progress-percent");
+            const pStatus = document.getElementById("upload-status");
+
+            pContainer.classList.remove("hidden");
+            pStatus.innerText = "Analyzing file chunks...";
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                pBar.style.width = progress + "%";
+                pPercent.innerText = progress + "%";
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    pStatus.innerText = "✅ Saved & Ready to Analyze!";
+                    pStatus.classList.replace("text-blue-400", "text-emerald-400");
+                }
+            }, 80);
+        }
+    </script>
+</body>
+</html>
